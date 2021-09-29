@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+mysql-connector-python = "*"
+awesome-slugify = "*"
+
+[dev-packages]
+fourmat = "*"
+
+[requires]
+python_version = "3.9"
+
+[scripts]
+lint = "fourmat check"
+"lint:fix" = "fourmat fix"
+generate = "python run.py"
