@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 
 import mysql.connector
 
-from . import tag
+from . import category, tag
 
 
 def wxr_header(site_url):
@@ -34,9 +34,11 @@ def wxr(host, database, user, password, site_url):
     )
     root, channel = wxr_header(site_url)
 
-    term_id = 1
+    # skip over any existing term IDs
+    term_id = 1000
 
     # generate tags
     term_id = tag.generate(connection, channel, term_id)
+    term_id, redirects = category.generate(connection, channel, term_id)
 
-    return root
+    return root, redirects
