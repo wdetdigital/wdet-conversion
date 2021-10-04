@@ -11,7 +11,12 @@ class Tag:
 # get all the tags from the database
 def get(connection):
     cursor = connection.cursor()
-    cursor.execute("SELECT name, slug from taggit_tag")
+    cursor.execute(
+        "SELECT name, slug "
+        "FROM taggit_tag "
+        "INNER JOIN taggit_taggeditem "
+        "  ON taggit_tag.id = taggit_taggeditem.tag_id"
+    )
 
     tags = []
     for name, slug in cursor:
