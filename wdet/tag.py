@@ -41,4 +41,4 @@ def generate(connection, channel, term_id):
         e.text = tag.name
         term_id += 1
 
-    return term_id
+    return term_id, []
