@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 
 import mysql.connector
 
-from . import category, redirect, tag
+from . import category, redirect, tag, user
 
 
 def wxr_header(site_url):
@@ -28,9 +28,9 @@ def wxr_header(site_url):
 
 
 # reads in data from the django CMS database and returns an XML file to be exported
-def wxr(host, database, user, password, site_url):
+def wxr(host, database, db_user, password, site_url):
     connection = mysql.connector.connect(
-        host=host, database=database, user=user, password=password
+        host=host, database=database, user=db_user, password=password
     )
     root, channel = wxr_header(site_url)
 
@@ -48,5 +48,7 @@ def wxr(host, database, user, password, site_url):
     # generate redirects
     term_id, r = redirect.generate(connection, channel, term_id)
     redirects.extend(r)
+
+    user.generate(connection, channel)
 
     return root, redirects
