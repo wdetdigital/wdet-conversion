@@ -16,8 +16,7 @@ def get(connection):
     cursor.execute(
         "SELECT name, slug "
         "FROM taggit_tag "
-        "INNER JOIN taggit_taggeditem "
-        "  ON taggit_tag.id = taggit_taggeditem.tag_id"
+        "WHERE id IN (SELECT DISTINCT tag_id from taggit_taggeditem)"
     )
 
     tags = []
