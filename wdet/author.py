@@ -155,7 +155,9 @@ def generate(connection, channel):
             e = ET.SubElement(meta, "wp:meta_key")
             e.text = "avatar"
             e = ET.SubElement(meta, "wp:meta_value")
-            e.text = str(asset.generate_one(connection, channel, author.photo_id))
+            e.text = str(
+                asset.generate_one(connection, channel, author.photo_id)
+            )
 
         redirects.append(author.redirect)
 
