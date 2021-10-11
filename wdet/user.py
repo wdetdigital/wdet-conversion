@@ -44,3 +44,5 @@ def generate(connection, channel):
         e.text = user.first_name
         e = ET.SubElement(xml_user, "wp:author_last_name")
         e.text = user.last_name
+
+    return []

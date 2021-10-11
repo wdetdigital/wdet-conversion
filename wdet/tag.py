@@ -1,5 +1,7 @@
 import xml.etree.ElementTree as ET
 
+from . import unique
+
 
 class Tag:
     # tag URLs match between CMSes, so they can be imported without a redirect
@@ -28,17 +30,16 @@ def get(connection):
 
 # generates the tag XML, channel is modified in place
 # the new term_id is returned
-def generate(connection, channel, term_id):
+def generate(connection, channel):
     tags = get(connection)
 
     for tag in tags:
         xml_tag = ET.SubElement(channel, "wp:tag")
         e = ET.SubElement(xml_tag, "wp:term_id")
-        e.text = str(term_id)
+        e.text = str(unique.term_id())
         e = ET.SubElement(xml_tag, "wp:tag_slug")
         e.text = tag.slug
         e = ET.SubElement(xml_tag, "wp:tag_name")
         e.text = tag.name
-        term_id += 1
 
-    return term_id, []
+    return []

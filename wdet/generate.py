@@ -34,24 +34,15 @@ def wxr(host, database, db_user, password, site_url):
     )
     root, channel = wxr_header(site_url)
 
-    # skip over any existing term IDs
-    term_id = 1000
     # start with no redirects
     redirects = []
 
-    # generate tags
-    term_id, r = tag.generate(connection, channel, term_id)
-    redirects.extend(r)
-    # generate categories (topics, shows, and series)
-    term_id, r = category.generate(connection, channel, term_id)
-    redirects.extend(r)
-    # generate redirects
-    term_id, r = redirect.generate(connection, channel, term_id)
-    redirects.extend(r)
-    # generate users (needed for authors)
-    user.generate(connection, channel)
-    # generate authors
-    term_id, r = author.generate(connection, channel, term_id)
-    redirects.extend(r)
+    redirects.extend(tag.generate(connection, channel))
+    redirects.extend(
+        category.generate(connection, channel)
+    )  # topics, shows, and series
+    redirects.extend(redirect.generate(connection, channel))
+    redirects.extend(user.generate(connection, channel))
+    redirects.extend(author.generate(connection, channel))
 
     return root, redirects

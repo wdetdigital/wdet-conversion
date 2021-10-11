@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 
 from slugify import slugify
 
+from . import unique
+
 
 class Author:
     def __init__(
@@ -75,7 +77,7 @@ def get_authors(connection):
     return authors
 
 
-def generate(connection, channel, term_id):
+def generate(connection, channel):
     authors = get_authors(connection)
 
     redirects = []
@@ -83,7 +85,7 @@ def generate(connection, channel, term_id):
     for author in authors:
         xml_author = ET.SubElement(channel, "wp:term")
         e = ET.SubElement(xml_author, "wp:term_id")
-        e.text = str(term_id)
+        e.text = str(unique.term_id())
         e = ET.SubElement(xml_author, "wp:term_taxonomy")
         e.text = "author"
         e = ET.SubElement(xml_author, "wp:term_slug")
@@ -132,7 +134,11 @@ def generate(connection, channel, term_id):
         e = ET.SubElement(meta, "wp:meta_value")
         e.text = author.bio
 
-        term_id += 1
+        # <wp:termmeta>
+        # <wp:meta_key>avatar</wp:meta_key>
+        # <wp:meta_value>10</wp:meta_value>
+        # </wp:termmeta>
+
         redirects.append(author.redirect)
 
-    return term_id, redirects
+    return redirects

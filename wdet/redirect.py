@@ -14,6 +14,5 @@ def get_redirects(connection):
     return redirects
 
 
-def generate(connection, channel, term_id):
-    redirects = get_redirects(connection)
-    return term_id, redirects
+def generate(connection, channel):
+    return get_redirects(connection)
