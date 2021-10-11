@@ -2,12 +2,20 @@ import xml.etree.ElementTree as ET
 
 from slugify import slugify
 
-from . import unique
+from . import asset, unique
 
 
 class Author:
     def __init__(
-        self, person_id, user_id, username, first_name, last_name, email, bio
+        self,
+        person_id,
+        user_id,
+        username,
+        first_name,
+        last_name,
+        email,
+        bio,
+        photo_id,
     ):
         self.person_id = person_id
         self.user_id = 0
@@ -18,6 +26,7 @@ class Author:
         self.last_name = last_name
         self.email = email
         self.bio = bio
+        self.photo_id = photo_id
 
     @property
     def slug(self):
@@ -50,7 +59,7 @@ def get_authors(connection):
     cursor = connection.cursor()
     cursor.execute(
         "SELECT wdet_person.id, auth_user.id, username, given_name, "
-        "  surname, wdet_person.email, long_bio "
+        "  surname, wdet_person.email, long_bio, photo_id "
         "FROM wdet_person "
         "LEFT OUTER JOIN auth_user "
         "  ON wdet_person.user_id = auth_user.id"
@@ -66,9 +75,17 @@ def get_authors(connection):
         last_name,
         email,
         bio,
+        photo_id,
     ) in cursor:
         author = Author(
-            person_id, user_id, username, first_name, last_name, email, bio
+            person_id,
+            user_id,
+            username,
+            first_name,
+            last_name,
+            email,
+            bio,
+            photo_id,
         )
         authors.append(author)
         person_author[person_id] = author
@@ -133,11 +150,12 @@ def generate(connection, channel):
         e.text = "description"
         e = ET.SubElement(meta, "wp:meta_value")
         e.text = author.bio
-
-        # <wp:termmeta>
-        # <wp:meta_key>avatar</wp:meta_key>
-        # <wp:meta_value>10</wp:meta_value>
-        # </wp:termmeta>
+        if author.photo_id:
+            meta = ET.SubElement(xml_author, "wp:termmeta")
+            e = ET.SubElement(meta, "wp:meta_key")
+            e.text = "avatar"
+            e = ET.SubElement(meta, "wp:meta_value")
+            e.text = str(asset.generate_one(connection, channel, author.photo_id))
 
         redirects.append(author.redirect)
 
