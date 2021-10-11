@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 
 import mysql.connector
 
-from . import category, redirect, tag, user
+from . import author, category, redirect, tag, user
 
 
 def wxr_header(site_url):
@@ -48,7 +48,10 @@ def wxr(host, database, db_user, password, site_url):
     # generate redirects
     term_id, r = redirect.generate(connection, channel, term_id)
     redirects.extend(r)
-
+    # generate users (needed for authors)
     user.generate(connection, channel)
+    # generate authors
+    term_id, r = author.generate(connection, channel, term_id)
+    redirects.extend(r)
 
     return root, redirects
