@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 mysql-connector-python = "*"
 awesome-slugify = "*"
+python-slugify = "*"
 
 [dev-packages]
 fourmat = "*"
