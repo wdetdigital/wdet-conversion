@@ -80,7 +80,7 @@ def get_asset(connection, asset_id):
     return asset
 
 
-def generate_one(connection, channel, asset_id):
+def generate_one(connection, channel, asset_id, post_parent=0):
     asset = get_asset(connection, asset_id)
 
     item = ET.SubElement(channel, "item")
@@ -113,7 +113,7 @@ def generate_one(connection, channel, asset_id):
     e = ET.SubElement(item, "wp:status")
     e.text = "inherit"
     e = ET.SubElement(item, "wp:post_parent")
-    e.text = "0"
+    e.text = str(post_parent)
     e = ET.SubElement(item, "wp:menu_order")
     e.text = "0"
     e = ET.SubElement(item, "wp:post_type")
