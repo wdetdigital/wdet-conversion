@@ -51,9 +51,6 @@ asset_cache = {}
 
 
 def get_asset(connection, asset_id):
-    if asset_id in asset_cache:
-        return asset_cache[asset_id]
-
     cursor = connection.cursor()
     cursor.execute(
         "SELECT created, username, last_modified, name, content, credit, notes "
@@ -81,6 +78,11 @@ def get_asset(connection, asset_id):
 
 
 def generate_one(connection, channel, asset_id, post_parent=0):
+    # did we already generate this? then don't do it again
+    # note: this could present problems for reused feature images (wrong parent)
+    if asset_id in asset_cache:
+        return asset_cache[asset_id].post_id
+
     asset = get_asset(connection, asset_id)
 
     item = ET.SubElement(channel, "item")
