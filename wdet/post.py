@@ -1,3 +1,4 @@
+import logging
 import xml.etree.ElementTree as ET
 
 from pytz import timezone, utc
@@ -7,6 +8,8 @@ from . import asset, unique
 from .author import get_author_by_id
 from .category import Category
 from .tag import Tag
+
+LOG = logging.getLogger(__name__)
 
 
 class Post:
@@ -89,6 +92,8 @@ def get_tags(connection, post_id):
     for name, slug in cursor:
         tags.append(Tag(name, slug))
 
+    LOG.debug("Retrieved %d post tags for post %d", len(tags), post_id)
+
     cursor.close()
     return tags
 
@@ -107,6 +112,8 @@ def get_topics(connection, post_id):
     topics = []
     for name, slug in cursor:
         topics.append(Category(name, slug, "", ""))
+
+    LOG.debug("Retrieved %d post topics for post %d", len(topics), post_id)
 
     cursor.close()
     return topics
@@ -127,6 +134,8 @@ def get_series(connection, post_id):
     for name, slug in cursor:
         series.append(Category(name, slug, "", ""))
 
+    LOG.debug("Retrieved %d post series for post %d", len(series), post_id)
+
     cursor.close()
     return series
 
@@ -146,6 +155,8 @@ def get_shows(connection, post_id):
     for name, slug in cursor:
         shows.append(Category(name, slug, "", ""))
 
+    LOG.debug("Retrieved %d post shows for post %d", len(shows), post_id)
+
     cursor.close()
     return shows
 
@@ -160,6 +171,8 @@ def get_authors(connection, post_id):
     authors = []
     for (author_id,) in cursor:
         authors.append(get_author_by_id(author_id))
+
+    LOG.debug("Retrieved %d post authors for post %d", len(authors), post_id)
 
     cursor.close()
     return authors
@@ -235,6 +248,8 @@ def get_posts(connection):
                 authors,
             )
         )
+
+    LOG.info("Retrieved %d posts", len(posts))
 
     return posts
 
@@ -342,5 +357,7 @@ def generate(connection, channel):
             e.text = str(asset_id)
 
         redirects.append(post.redirect)
+
+        LOG.debug("Added post: %s", post.title)
 
     return redirects

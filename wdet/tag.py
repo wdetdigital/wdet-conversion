@@ -1,6 +1,9 @@
+import logging
 import xml.etree.ElementTree as ET
 
 from . import unique
+
+LOG = logging.getLogger(__name__)
 
 
 class Tag:
@@ -23,6 +26,8 @@ def get(connection):
     for name, slug in cursor:
         tags.append(Tag(name, slug))
 
+    LOG.info("Retrieved %d tags", len(tags))
+
     cursor.close()
     return tags
 
@@ -40,5 +45,7 @@ def generate(connection, channel):
         e.text = tag.slug
         e = ET.SubElement(xml_tag, "wp:tag_name")
         e.text = tag.name
+
+        LOG.debug("Added tag: %s", tag.name)
 
     return []

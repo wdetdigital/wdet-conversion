@@ -1,3 +1,8 @@
+import logging
+
+LOG = logging.getLogger(__name__)
+
+
 def get_redirects(connection):
     cursor = connection.cursor()
     cursor.execute("SELECT old_path, new_path FROM django_redirect")
@@ -10,6 +15,9 @@ def get_redirects(connection):
                 "target": new_path,
             }
         )
+        LOG.debug("Added redirect from %s to %s", old_path, new_path)
+
+    LOG.info("Retrieved %d redirects", len(redirects))
 
     return redirects
 

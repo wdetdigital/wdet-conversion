@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 import csv
+import logging
 import os
 import sys
 import xml.dom.minidom as minidom
 import xml.etree.ElementTree as ET
 
 from wdet import generate
+
+LOG = logging.getLogger(__name__)
 
 DB_HOST = os.getenv("DB_HOST", "127.0.0.1")
 DB_DATABASE = os.getenv("DB_DATABASE", "webproject")
@@ -20,8 +23,11 @@ def run(xml_path, redirect_path):
     )
 
     reparsed = minidom.parseString(ET.tostring(xml, encoding="unicode"))
+    LOG.info("XML prettified")
+
     with open(xml_path, "wb") as f:
         f.write(reparsed.toprettyxml(indent="  ", encoding="UTF-8"))
+    LOG.info("Finished writing XML")
 
     with open(redirect_path, "w", newline="") as csvfile:
         fieldnames = [
@@ -48,7 +54,12 @@ def run(xml_path, redirect_path):
         for redirect in redirects:
             redirect.update(defaults)
             writer.writerow(redirect)
+    LOG.info("Finished writing redirects")
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+        level=logging.INFO,
+    )
     run(sys.argv[1], sys.argv[2])

@@ -1,8 +1,11 @@
+import logging
 import xml.etree.ElementTree as ET
 
 import mysql.connector
 
 from . import author, category, post, redirect, tag, user
+
+LOG = logging.getLogger(__name__)
 
 
 def wxr_header(site_url):
@@ -29,6 +32,8 @@ def wxr_header(site_url):
 
 # reads in data from the django CMS database and returns an XML file to be exported
 def wxr(host, database, db_user, password, site_url):
+    LOG.info("Generating wxr file")
+
     connection = mysql.connector.connect(
         host=host, database=database, user=db_user, password=password
     )
@@ -45,5 +50,7 @@ def wxr(host, database, db_user, password, site_url):
     redirects.extend(user.generate(connection, channel))
     redirects.extend(author.generate(connection, channel))
     redirects.extend(post.generate(connection, channel))
+
+    LOG.info("Done generating wxr")
 
     return root, redirects

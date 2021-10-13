@@ -1,6 +1,9 @@
+import logging
 import xml.etree.ElementTree as ET
 
 from . import unique
+
+LOG = logging.getLogger(__name__)
 
 
 class Category:
@@ -36,6 +39,8 @@ def get_topics(connection):
     for name, slug, description in cursor:
         topics.append(Category(name, slug, description, "topics"))
 
+    LOG.info("Retrieved %d topics", len(topics))
+
     cursor.close()
     return topics
 
@@ -49,6 +54,8 @@ def get_series(connection):
     for name, slug, description in cursor:
         series.append(Category(name, slug, description, "series"))
 
+    LOG.info("Retrieved %d series", len(series))
+
     cursor.close()
     return series
 
@@ -61,6 +68,8 @@ def get_shows(connection):
     shows = [Category("Shows", "shows", "", "")]
     for name, slug, description in cursor:
         shows.append(Category(name, slug, description, "shows"))
+
+    LOG.info("Retrieved %d shows", len(shows))
 
     cursor.close()
     return shows
@@ -90,5 +99,7 @@ def generate(connection, channel):
             e.text = category.description
 
         redirects.append(category.redirect)
+
+        LOG.debug("Added category: %s/%s", category.parent, category.name)
 
     return redirects

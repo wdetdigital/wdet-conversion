@@ -1,4 +1,7 @@
+import logging
 import xml.etree.ElementTree as ET
+
+LOG = logging.getLogger(__name__)
 
 
 class User:
@@ -22,6 +25,8 @@ def get_users(connection):
     for user_id, username, first_name, last_name, email in cursor:
         users.append(User(user_id, username, email, first_name, last_name))
 
+    LOG.info("Retrieved %d users", len(users))
+
     cursor.close()
     return users
 
@@ -44,5 +49,7 @@ def generate(connection, channel):
         e.text = user.first_name
         e = ET.SubElement(xml_user, "wp:author_last_name")
         e.text = user.last_name
+
+        LOG.debug("Added user: %s", user.username)
 
     return []

@@ -1,8 +1,11 @@
+import logging
 import xml.etree.ElementTree as ET
 
 from slugify import slugify
 
 from . import asset, unique
+
+LOG = logging.getLogger(__name__)
 
 
 class Author:
@@ -90,6 +93,8 @@ def get_authors(connection):
         authors.append(author)
         person_author[person_id] = author
 
+    LOG.info("Retrieved %d authors", len(authors))
+
     cursor.close()
     return authors
 
@@ -160,5 +165,7 @@ def generate(connection, channel):
             )
 
         redirects.append(author.redirect)
+
+        LOG.debug("Added author: %s", author.name)
 
     return redirects

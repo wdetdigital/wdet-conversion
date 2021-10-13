@@ -1,9 +1,12 @@
+import logging
 import xml.etree.ElementTree as ET
 
 from pytz import timezone, utc
 from slugify import slugify
 
 from . import unique
+
+LOG = logging.getLogger(__name__)
 
 
 class Asset:
@@ -81,6 +84,7 @@ def generate_one(connection, channel, asset_id, post_parent=0):
     # did we already generate this? then don't do it again
     # note: this could present problems for reused feature images (wrong parent)
     if asset_id in asset_cache:
+        LOG.debug("Retrieving asset from cache: %d", asset_id)
         return asset_cache[asset_id].post_id
 
     asset = get_asset(connection, asset_id)
@@ -123,5 +127,7 @@ def generate_one(connection, channel, asset_id, post_parent=0):
     ET.SubElement(item, "wp:post_password")
     e = ET.SubElement(item, "wp:is_sticky")
     e.text = "0"
+
+    LOG.debug("Added asset: %d", asset_id)
 
     return asset.post_id
