@@ -15,10 +15,10 @@ class User:
 
 def get_users(connection):
     cursor = connection.cursor()
-    # ignore test ID, the admin ID and the JamesK ID
+    # ignore the admin ID and the JamesK ID
     cursor.execute(
         "SELECT id, username, first_name, last_name, email "
-        "FROM auth_user WHERE id NOT IN (1, 12, 122)"
+        "FROM auth_user WHERE id NOT IN (12, 122) AND is_active = 1"
     )
 
     users = []
