@@ -1,16 +1,32 @@
 import logging
 import xml.etree.ElementTree as ET
 
+from . import unique
+
 LOG = logging.getLogger(__name__)
 
 
 class User:
-    def __init__(self, user_id, username, email, first_name, last_name):
-        self.user_id = user_id
+    def __init__(self, username, email, first_name, last_name):
+        self.user_id = unique.user_id()
         self.username = username.strip()
         self.email = email.strip()
         self.first_name = first_name.strip()
         self.last_name = last_name.strip()
+
+
+# map of old CMS user IDs to user objects
+user_id_map = {}
+# a set of usernames
+usernames = set()
+
+
+def get_user_by_id(user_id):
+    return user_id_map.get(user_id)
+
+
+def username_exists(username):
+    return username in usernames
 
 
 def get_users(connection):
@@ -23,7 +39,10 @@ def get_users(connection):
 
     users = []
     for user_id, username, first_name, last_name, email in cursor:
-        users.append(User(user_id, username, email, first_name, last_name))
+        user = User(username, email, first_name, last_name)
+        users.append(user)
+        user_id_map[user_id] = user
+        usernames.add(username)
 
     LOG.info("Retrieved %d users", len(users))
 

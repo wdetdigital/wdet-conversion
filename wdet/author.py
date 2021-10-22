@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 from slugify import slugify
 
 from . import asset, unique
+from .user import get_user_by_id
 
 LOG = logging.getLogger(__name__)
 
@@ -12,8 +13,7 @@ class Author:
     def __init__(
         self,
         person_id,
-        user_id,
-        username,
+        user,
         first_name,
         last_name,
         email,
@@ -21,10 +21,7 @@ class Author:
         photo_id,
     ):
         self.person_id = person_id
-        self.user_id = 0
-        if user_id:
-            self.user_id = user_id
-        self.username = username
+        self.user = user or None
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -33,10 +30,7 @@ class Author:
 
     @property
     def slug(self):
-        if self.username:
-            return self.username
-
-        return slugify(self.name)
+        return self.user.username if self.user else slugify(self.name)
 
     @property
     def name(self):
@@ -61,7 +55,7 @@ def get_author_by_id(person_id):
 def get_authors(connection):
     cursor = connection.cursor()
     cursor.execute(
-        "SELECT wdet_person.id, auth_user.id, username, given_name, "
+        "SELECT wdet_person.id, auth_user.id, given_name, "
         "  surname, wdet_person.email, long_bio, photo_id "
         "FROM wdet_person "
         "LEFT OUTER JOIN auth_user "
@@ -73,17 +67,16 @@ def get_authors(connection):
     for (
         person_id,
         user_id,
-        username,
         first_name,
         last_name,
         email,
         bio,
         photo_id,
     ) in cursor:
+        user = get_user_by_id(user_id)
         author = Author(
             person_id,
-            user_id,
-            username,
+            user,
             first_name,
             last_name,
             email,
@@ -115,17 +108,17 @@ def generate(connection, channel):
         ET.SubElement(xml_author, "wp:term_parent")
         e = ET.SubElement(xml_author, "wp:term_name")
         e.text = author.name
-        if author.user_id:
+        if author.user:
             meta = ET.SubElement(xml_author, "wp:termmeta")
             e = ET.SubElement(meta, "wp:meta_key")
-            e.text = f"user_id_{author.user_id}"
+            e.text = f"user_id_{author.user.user_id}"
             e = ET.SubElement(meta, "wp:meta_value")
             e.text = "user_id"
         meta = ET.SubElement(xml_author, "wp:termmeta")
         e = ET.SubElement(meta, "wp:meta_key")
         e.text = "user_id"
         e = ET.SubElement(meta, "wp:meta_value")
-        e.text = str(author.user_id)
+        e.text = str(author.user.user_id if author.user else 0)
         meta = ET.SubElement(xml_author, "wp:termmeta")
         e = ET.SubElement(meta, "wp:meta_key")
         e.text = "first_name"
@@ -145,7 +138,7 @@ def generate(connection, channel):
         e = ET.SubElement(meta, "wp:meta_key")
         e.text = "user_login"
         e = ET.SubElement(meta, "wp:meta_value")
-        e.text = author.username
+        e.text = author.user.username if author.user else ""
         meta = ET.SubElement(xml_author, "wp:termmeta")
         e = ET.SubElement(meta, "wp:meta_key")
         e.text = "user_url"

@@ -8,6 +8,7 @@ from . import asset, unique
 from .author import get_author_by_id
 from .category import Category
 from .tag import Tag
+from .user import username_exists
 
 LOG = logging.getLogger(__name__)
 
@@ -265,7 +266,7 @@ def generate(connection, channel):
         e = ET.SubElement(item, "guid", attrib={"isPermaLink": "false"})
         e.text = f"https://wdet.org/?p={post.post_id}"
         e = ET.SubElement(item, "dc:creator")
-        e.text = post.username
+        e.text = post.username if username_exists(post.username) else "admin"
         e = ET.SubElement(item, "content:encoded")
         e.text = post.content
         e = ET.SubElement(item, "excerpt:encoded")

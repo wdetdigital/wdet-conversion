@@ -5,6 +5,7 @@ from pytz import timezone, utc
 from slugify import slugify
 
 from . import unique
+from .user import username_exists
 
 LOG = logging.getLogger(__name__)
 
@@ -95,7 +96,7 @@ def generate_one(connection, channel, asset_id, post_parent=0):
     e = ET.SubElement(item, "guid", attrib={"isPermaLink": "false"})
     e.text = asset.guid
     e = ET.SubElement(item, "dc:creator")
-    e.text = asset.username
+    e.text = asset.username if username_exists(asset.username) else "admin"
     e = ET.SubElement(item, "content:encoded")
     e.text = asset.notes
     e = ET.SubElement(item, "excerpt:encoded")
