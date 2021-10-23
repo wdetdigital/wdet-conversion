@@ -255,11 +255,12 @@ def get_posts(connection):
     return posts
 
 
-def generate(connection, channel):
+def generate(connection, wxr_header):
     posts = get_posts(connection)
 
+    root, channel = wxr_header()
     redirects = []
-    for post in posts:
+    for index, post in enumerate(posts):
         item = ET.SubElement(channel, "item")
         e = ET.SubElement(item, "title")
         e.text = post.title
@@ -361,4 +362,10 @@ def generate(connection, channel):
 
         LOG.debug("Added post: %s", post.title)
 
-    return redirects
+        if (index + 1) % 2000 == 0:
+            LOG.info("Finished processing post %d", index)
+            yield root, redirects
+            root, channel = wxr_header()
+            redirects = []
+
+    yield root, redirects

@@ -32,12 +32,15 @@ def wxr_header(site_url):
 
 # reads in data from the django CMS database and returns an XML file to be exported
 def wxr(host, database, db_user, password, site_url):
-    LOG.info("Generating wxr file")
+    LOG.info("Generating wxr files")
 
     connection = mysql.connector.connect(
         host=host, database=database, user=db_user, password=password
     )
+
+    roots = []
     root, channel = wxr_header(site_url)
+    roots.append(root)
 
     # start with no redirects
     redirects = []
@@ -49,8 +52,13 @@ def wxr(host, database, db_user, password, site_url):
     redirects.extend(redirect.generate(connection, channel))
     redirects.extend(user.generate(connection, channel))
     redirects.extend(author.generate(connection, channel))
-    redirects.extend(post.generate(connection, channel))
+
+    for root, redirs in post.generate(
+        connection, lambda: wxr_header(site_url)
+    ):
+        roots.append(root)
+        redirects.extend(redirs)
 
     LOG.info("Done generating wxr")
 
-    return root, redirects
+    return roots, redirects

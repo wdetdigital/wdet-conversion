@@ -2,6 +2,7 @@
 import csv
 import logging
 import os
+import os.path
 import sys
 import xml.dom.minidom as minidom
 import xml.etree.ElementTree as ET
@@ -18,16 +19,20 @@ SITE_URL = os.getenv("SITE_URL", "https://wdetcms.wdet.org")
 
 
 def run(xml_path, redirect_path):
-    xml, redirects = generate.wxr(
+    xmls, redirects = generate.wxr(
         DB_HOST, DB_DATABASE, DB_USER, DB_PASS, SITE_URL
     )
 
-    reparsed = minidom.parseString(ET.tostring(xml, encoding="unicode"))
-    LOG.info("XML prettified")
+    for index, xml in enumerate(xmls):
+        LOG.info("Processing XML chunk %d", index + 1)
+        reparsed = minidom.parseString(ET.tostring(xml, encoding="unicode"))
+        LOG.info("XML prettified")
 
-    with open(xml_path, "wb") as f:
-        f.write(reparsed.toprettyxml(indent="  ", encoding="UTF-8"))
-    LOG.info("Finished writing XML")
+        name, ext = os.path.splitext(xml_path)
+        chunk_path = f"{name}-{index}{ext}"
+        with open(chunk_path, "wb") as f:
+            f.write(reparsed.toprettyxml(indent="  ", encoding="UTF-8"))
+        LOG.info("Finished writing XML")
 
     with open(redirect_path, "w", newline="") as csvfile:
         fieldnames = [
