@@ -29,7 +29,7 @@ def run(xml_path, redirect_path):
         LOG.info("XML prettified")
 
         name, ext = os.path.splitext(xml_path)
-        chunk_path = f"{name}-{index}{ext}"
+        chunk_path = f"{name}-{index:02}{ext}"
         with open(chunk_path, "wb") as f:
             f.write(reparsed.toprettyxml(indent="  ", encoding="UTF-8"))
         LOG.info("Finished writing XML")

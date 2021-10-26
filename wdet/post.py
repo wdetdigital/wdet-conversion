@@ -362,7 +362,7 @@ def generate(connection, wxr_header):
 
         LOG.debug("Added post: %s", post.title)
 
-        if (index + 1) % 2000 == 0:
+        if (index + 1) % 1000 == 0:
             LOG.info("Finished processing post %d", index)
             yield root, redirects
             root, channel = wxr_header()
