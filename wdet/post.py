@@ -73,7 +73,7 @@ class Post:
             "%Y/%m/%d"
         )
         return {
-            "source": f"/posts/{date}/{self.old_post_id}-{self.slug}",
+            "source": f"/posts/{date}/{self.old_post_id}-{self.slug}/",
             "target": f"/{date}/{self.slug}",
         }
 
