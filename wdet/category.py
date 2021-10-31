@@ -13,7 +13,7 @@ class Category:
     def __init__(self, name, slug, description, parent):
         self.name = name
         self.slug = slug
-        self.description = description
+        self.description = description.replace("/thumbs/adjust", "/media")
         self.parent = parent
 
     @property

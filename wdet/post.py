@@ -38,7 +38,7 @@ class Post:
         self.title = title
         self.publish_datetime_utc = publish_datetime
         self.description = description
-        self.content = content
+        self.content = content.replace("/thumbs/adjust", "/media")
         self.asset_id = asset_id
         self.tags = tags
         self.topics = topics
