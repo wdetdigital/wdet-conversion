@@ -11,7 +11,7 @@ def term_id():
 
 def post_id():
     global _post_id
-    _post_id += 1
+    _post_id += 5
     return _post_id
 
 
