@@ -37,7 +37,7 @@ class Asset:
 
     @property
     def guid(self):
-        return f"https://wdet.org/media/{self.content}"
+        return f"https://wdetcms.wdet.org/media/{self.content}"
 
     @property
     def slug(self):
@@ -107,7 +107,7 @@ def generate_one_from_path(channel, path, post_parent=0):
     e = ET.SubElement(item, "title")
     e.text = path
     e = ET.SubElement(item, "guid", attrib={"isPermaLink": "false"})
-    e.text = f"https://wdet.org/media/{path}"
+    e.text = f"https://wdetcms.wdet.org/media/{path}"
     e = ET.SubElement(item, "dc:creator")
     e.text = "admin"
     e = ET.SubElement(item, "content:encoded")
