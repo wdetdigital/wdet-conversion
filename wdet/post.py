@@ -71,7 +71,7 @@ class Post:
 
     @property
     def redirect(self):
-        date = self.eastern.localize(self.publish_datetime_utc).strftime(
+        date = self.publish_datetime_utc.astimezone(self.eastern).strftime(
             "%Y/%m/%d"
         )
         return {
