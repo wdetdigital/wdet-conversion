@@ -26,6 +26,7 @@ class Post:
         description,
         content,
         asset_id,
+        mp3_file,
         tags,
         topics,
         series,
@@ -40,6 +41,7 @@ class Post:
         self.description = description
         self.content = content.replace("/thumbs/adjust", "/media")
         self.asset_id = asset_id
+        self.mp3_file = mp3_file
         self.tags = tags
         self.topics = topics
         self.series = series
@@ -183,7 +185,7 @@ def get_posts(connection):
     cursor = connection.cursor()
     cursor.execute(
         "SELECT wdet_post.id, username, last_modified, title, publish_datetime, "
-        "  description, content, thumbnail_image_id "
+        "  description, content, thumbnail_image_id, mp3_file "
         "FROM wdet_post "
         "INNER JOIN auth_user "
         "  ON wdet_post.created_user_id = auth_user.id "
@@ -202,6 +204,7 @@ def get_posts(connection):
         description,
         content,
         asset_id,
+        mp3_file,
     ) in cursor:
         rows.append(
             (
@@ -213,6 +216,7 @@ def get_posts(connection):
                 description,
                 content,
                 asset_id,
+                mp3_file,
             )
         )
     cursor.close()
@@ -226,6 +230,7 @@ def get_posts(connection):
         description,
         content,
         asset_id,
+        mp3_file,
     ) in rows:
         tags = get_tags(connection, post_id)
         topics = get_topics(connection, post_id)
@@ -242,6 +247,7 @@ def get_posts(connection):
                 description,
                 content,
                 asset_id,
+                mp3_file,
                 tags,
                 topics,
                 series,
@@ -357,6 +363,21 @@ def generate(connection, wxr_header):
             e.text = "_thumbnail_id"
             e = ET.SubElement(meta, "wp:meta_value")
             e.text = str(asset_id)
+
+        if post.mp3_file:
+            asset_id = asset.generate_one_from_path(
+                channel, post.mp3_file, post.post_id
+            )
+            meta = ET.SubElement(item, "wp:postmeta")
+            e = ET.SubElement(meta, "wp:meta_key")
+            e.text = "featured_audio"
+            e = ET.SubElement(meta, "wp:meta_value")
+            e.text = str(asset_id)
+            meta = ET.SubElement(item, "wp:postmeta")
+            e = ET.SubElement(meta, "wp:meta_key")
+            e.text = "_featured_audio"
+            e = ET.SubElement(meta, "wp:meta_value")
+            e.text = "field_618cbff5f2653"
 
         redirects.append(post.redirect)
 

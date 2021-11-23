@@ -1,5 +1,6 @@
 import logging
 import xml.etree.ElementTree as ET
+from datetime import datetime
 
 from pytz import timezone, utc
 from slugify import slugify
@@ -14,7 +15,15 @@ class Asset:
     eastern = timezone("US/Eastern")
 
     def __init__(
-        self, created, username, last_modified, name, content, credit, notes
+        self,
+        created,
+        username,
+        last_modified,
+        name,
+        content,
+        credit,
+        source,
+        notes,
     ):
         self.created_utc = created
         self.username = username
@@ -22,6 +31,7 @@ class Asset:
         self.name = name
         self.content = content
         self.credit = credit
+        self.source = source
         self.notes = notes
         self.post_id = unique.post_id()
 
@@ -57,7 +67,7 @@ asset_cache = {}
 def get_asset(connection, asset_id):
     cursor = connection.cursor()
     cursor.execute(
-        "SELECT created, username, last_modified, name, content, credit, notes "
+        "SELECT created, username, last_modified, name, content, credit, source, notes "
         "FROM wdet_asset "
         "INNER JOIN auth_user ON wdet_asset.created_user_id = auth_user.id "
         "WHERE wdet_asset.id = %s",
@@ -71,14 +81,65 @@ def get_asset(connection, asset_id):
         name,
         content,
         credit,
+        source,
         notes,
     ) in cursor:
         asset = Asset(
-            created, username, last_modified, name, content, credit, notes
+            created,
+            username,
+            last_modified,
+            name,
+            content,
+            credit,
+            source,
+            notes,
         )
 
     asset_cache[asset_id] = asset
     return asset
+
+
+def generate_one_from_path(channel, path, post_parent=0):
+    asset_id = unique.post_id()
+
+    item = ET.SubElement(channel, "item")
+    e = ET.SubElement(item, "title")
+    e.text = path
+    e = ET.SubElement(item, "guid", attrib={"isPermaLink": "false"})
+    e.text = f"https://wdet.org/media/{path}"
+    e = ET.SubElement(item, "dc:creator")
+    e.text = "admin"
+    e = ET.SubElement(item, "content:encoded")
+    # empty
+    e = ET.SubElement(item, "excerpt:encoded")
+    # empty
+    e = ET.SubElement(item, "wp:post_id")
+    e.text = str(asset_id)
+    e = ET.SubElement(item, "wp:post_date")
+    e.text = str(datetime.now())[:19]
+    e = ET.SubElement(item, "wp:post_date_gmt")
+    e.text = str(datetime.now().astimezone(utc))[:19]
+    e = ET.SubElement(item, "wp:comment_status")
+    e.text = "closed"
+    e = ET.SubElement(item, "wp:ping_status")
+    e.text = "closed"
+    e = ET.SubElement(item, "wp:post_name")
+    e.text = slugify(path)
+    e = ET.SubElement(item, "wp:status")
+    e.text = "inherit"
+    e = ET.SubElement(item, "wp:post_parent")
+    e.text = str(post_parent)
+    e = ET.SubElement(item, "wp:menu_order")
+    e.text = "0"
+    e = ET.SubElement(item, "wp:post_type")
+    e.text = "attachment"
+    ET.SubElement(item, "wp:post_password")
+    e = ET.SubElement(item, "wp:is_sticky")
+    e.text = "0"
+
+    LOG.debug("Added asset: %s", path)
+
+    return asset_id
 
 
 def generate_one(connection, channel, asset_id, post_parent=0):
@@ -100,7 +161,7 @@ def generate_one(connection, channel, asset_id, post_parent=0):
     e = ET.SubElement(item, "content:encoded")
     e.text = asset.notes
     e = ET.SubElement(item, "excerpt:encoded")
-    e.text = asset.credit
+    # empty
     e = ET.SubElement(item, "wp:post_id")
     e.text = str(asset.post_id)
     e = ET.SubElement(item, "wp:post_date")
@@ -128,6 +189,28 @@ def generate_one(connection, channel, asset_id, post_parent=0):
     ET.SubElement(item, "wp:post_password")
     e = ET.SubElement(item, "wp:is_sticky")
     e.text = "0"
+    if asset.credit:
+        meta = ET.SubElement(item, "wp:postmeta")
+        e = ET.SubElement(meta, "wp:meta_key")
+        e.text = "credit"
+        e = ET.SubElement(meta, "wp:meta_value")
+        e.text = asset.credit
+        meta = ET.SubElement(item, "wp:postmeta")
+        e = ET.SubElement(meta, "wp:meta_key")
+        e.text = "_credit"
+        e = ET.SubElement(meta, "wp:meta_value")
+        e.text = "field_61928d08c7771"
+    if asset.source:
+        meta = ET.SubElement(item, "wp:postmeta")
+        e = ET.SubElement(meta, "wp:meta_key")
+        e.text = "source_license_url"
+        e = ET.SubElement(meta, "wp:meta_value")
+        e.text = asset.source
+        meta = ET.SubElement(item, "wp:postmeta")
+        e = ET.SubElement(meta, "wp:meta_key")
+        e.text = "_source_license_url"
+        e = ET.SubElement(meta, "wp:meta_value")
+        e.text = "field_61928d44c7772"
 
     LOG.debug("Added asset: %d", asset_id)
 
