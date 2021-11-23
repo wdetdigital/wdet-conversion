@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 
 import mysql.connector
 
-from . import author, category, post, redirect, tag, user
+from . import author, category, custom_field, post, redirect, tag, user
 
 LOG = logging.getLogger(__name__)
 
@@ -52,6 +52,7 @@ def wxr(host, database, db_user, password, site_url):
     redirects.extend(redirect.generate(connection, channel))
     redirects.extend(user.generate(connection, channel))
     redirects.extend(author.generate(connection, channel))
+    custom_field.generate(channel)
 
     for root, redirs in post.generate(
         connection, lambda: wxr_header(site_url)
