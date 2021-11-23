@@ -35,9 +35,9 @@ class Post:
     ):
         self.old_post_id = post_id
         self.username = username
-        self.last_modified_utc = last_modified
+        self.last_modified_utc = utc.localize(last_modified)
         self.title = title
-        self.publish_datetime_utc = publish_datetime
+        self.publish_datetime_utc = utc.localize(publish_datetime)
         self.description = description
         self.content = content.replace("/thumbs/adjust", "/media")
         self.asset_id = asset_id
@@ -51,19 +51,19 @@ class Post:
 
     @property
     def post_date(self):
-        return str(self.eastern.localize(self.publish_datetime_utc))[:19]
+        return str(self.publish_datetime_utc.astimezone(self.eastern))[:19]
 
     @property
     def post_date_gmt(self):
-        return str(self.publish_datetime_utc.astimezone(utc))[:19]
+        return str(self.publish_datetime_utc)[:19]
 
     @property
     def post_modified(self):
-        return str(self.eastern.localize(self.last_modified_utc))[:19]
+        return str(self.last_modified_utc.astimezone(self.eastern))[:19]
 
     @property
     def post_modified_gmt(self):
-        return str(self.last_modified_utc.astimezone(utc))[:19]
+        return str(self.last_modified_utc)[:19]
 
     @property
     def slug(self):

@@ -25,9 +25,9 @@ class Asset:
         source,
         notes,
     ):
-        self.created_utc = created
+        self.created_utc = utc.localize(created)
         self.username = username
-        self.last_modified_utc = last_modified
+        self.last_modified_utc = utc.localize(last_modified)
         self.name = name
         self.content = content
         self.credit = credit
@@ -45,19 +45,19 @@ class Asset:
 
     @property
     def post_date(self):
-        return str(self.eastern.localize(self.created_utc))[:19]
+        return str(self.created_utc.astimezone(self.eastern))[:19]
 
     @property
     def post_date_gmt(self):
-        return str(self.created_utc.astimezone(utc))[:19]
+        return str(self.created_utc)[:19]
 
     @property
     def post_modified(self):
-        return str(self.eastern.localize(self.last_modified_utc))[:19]
+        return str(self.last_modified_utc.astimezone(self.eastern))[:19]
 
     @property
     def post_modified_gmt(self):
-        return str(self.last_modified_utc.astimezone(utc))[:19]
+        return str(self.last_modified_utc)[:19]
 
 
 # ID to asset cache
@@ -101,6 +101,7 @@ def get_asset(connection, asset_id):
 
 def generate_one_from_path(channel, path, post_parent=0):
     asset_id = unique.post_id()
+    created_date = datetime.now()
 
     item = ET.SubElement(channel, "item")
     e = ET.SubElement(item, "title")
@@ -116,9 +117,9 @@ def generate_one_from_path(channel, path, post_parent=0):
     e = ET.SubElement(item, "wp:post_id")
     e.text = str(asset_id)
     e = ET.SubElement(item, "wp:post_date")
-    e.text = str(datetime.now())[:19]
+    e.text = str(created_date)[:19]
     e = ET.SubElement(item, "wp:post_date_gmt")
-    e.text = str(datetime.now().astimezone(utc))[:19]
+    e.text = str(created_date.astimezone(utc))[:19]
     e = ET.SubElement(item, "wp:comment_status")
     e.text = "closed"
     e = ET.SubElement(item, "wp:ping_status")
