@@ -114,7 +114,7 @@ def get_topics(connection, post_id):
 
     topics = []
     for name, slug in cursor:
-        topics.append(Category(name, slug, "", ""))
+        topics.append(Category(name, slug, ""))
 
     LOG.debug("Retrieved %d post topics for post %d", len(topics), post_id)
 
@@ -135,7 +135,7 @@ def get_series(connection, post_id):
 
     series = []
     for name, slug in cursor:
-        series.append(Category(name, slug, "", ""))
+        series.append(Category(name, slug, ""))
 
     LOG.debug("Retrieved %d post series for post %d", len(series), post_id)
 
@@ -156,7 +156,7 @@ def get_shows(connection, post_id):
 
     shows = []
     for name, slug in cursor:
-        shows.append(Category(name, slug, "", ""))
+        shows.append(Category(name, slug, ""))
 
     LOG.debug("Retrieved %d post shows for post %d", len(shows), post_id)
 
