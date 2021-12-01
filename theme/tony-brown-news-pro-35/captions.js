@@ -3,7 +3,9 @@ jQuery(document).ready(() => {
     const caption = image.dataset.caption;
     if (caption) {
       jQuery(image).children("figure").each((j, figure) => {
-        jQuery(figure).append(`<figcaption class="wp-caption-text">${caption}</figcaption>`);
+        const $figure = jQuery(figure);
+        $figure.addClass("wdet-pull-left");
+        $figure.append(`<figcaption class="wp-caption-text">${caption}</figcaption>`);
       });
     }
   });
