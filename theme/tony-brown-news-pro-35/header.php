@@ -171,5 +171,3 @@ if( $news_box_header_style === 'one' ){
 	}
 
  ?>
-
-
