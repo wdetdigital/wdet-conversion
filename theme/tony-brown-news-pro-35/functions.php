@@ -10,7 +10,8 @@ add_action( 'wp_enqueue_scripts', 'news_box_pro_child_enqueue_scripts');
 
 // add excerpt filter
 
-function add_excerpt($content) {
+function add_authors_excerpt($content) {
+	do_action('pp_multiple_authors_show_author_box', false, 'inline');
 	if (has_excerpt()) {
 		$excerpt = get_the_excerpt();
 		$content = <<<EOT
@@ -24,4 +25,4 @@ EOT;
 	}
 	return $content;
 }
-add_filter('the_content', 'add_excerpt');
+add_filter('the_content', 'add_authors_excerpt');
