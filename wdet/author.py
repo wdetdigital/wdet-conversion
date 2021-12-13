@@ -17,6 +17,7 @@ class Author:
         first_name,
         last_name,
         email,
+        short_bio,
         bio,
         photo_id,
     ):
@@ -25,6 +26,7 @@ class Author:
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
+        self.short_bio = short_bio
         self.bio = bio
         self.photo_id = photo_id
 
@@ -56,20 +58,20 @@ def get_authors(connection):
     cursor = connection.cursor()
     cursor.execute(
         "SELECT wdet_person.id, auth_user.id, given_name, "
-        "  surname, wdet_person.email, long_bio, photo_id "
+        "  surname, wdet_person.email, short_bio, long_bio, photo_id "
         "FROM wdet_person "
         "LEFT OUTER JOIN auth_user "
         "  ON wdet_person.user_id = auth_user.id"
     )
 
     authors = []
-    # person_id, user_id, username, first_name, last_name, email, bio
     for (
         person_id,
         user_id,
         first_name,
         last_name,
         email,
+        short_bio,
         bio,
         photo_id,
     ) in cursor:
@@ -80,6 +82,7 @@ def get_authors(connection):
             first_name,
             last_name,
             email,
+            short_bio,
             bio,
             photo_id,
         )
@@ -148,6 +151,11 @@ def generate(connection, channel):
         e.text = "description"
         e = ET.SubElement(meta, "wp:meta_value")
         e.text = author.bio
+        meta = ET.SubElement(xml_author, "wp:termmeta")
+        e = ET.SubElement(meta, "wp:meta_key")
+        e.text = "short_bio"
+        e = ET.SubElement(meta, "wp:meta_value")
+        e.text = author.short_bio
         if author.photo_id:
             meta = ET.SubElement(xml_author, "wp:termmeta")
             e = ET.SubElement(meta, "wp:meta_key")
