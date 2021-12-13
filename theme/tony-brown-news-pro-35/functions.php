@@ -29,7 +29,7 @@ add_filter('the_content', 'add_authors_excerpt');
 
 function add_audio($html) {
 	$audio = get_field('featured_audio');
-	if ( $audio ) {
+	if ( $audio && is_single() ) {
 		$html = <<<EOT
 <audio controls style="width: 100%">
   	<source src="$audio" type="audio/mpeg">
