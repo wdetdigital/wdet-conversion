@@ -277,6 +277,64 @@ def generate_audio_field(channel, group_id):
     e.text = "0"
 
 
+def generate_short_bio(channel):
+    post_id = unique.post_id()
+    created_date = datetime.now()
+
+    item = ET.SubElement(channel, "item")
+    e = ET.SubElement(item, "title")
+    e.text = "Short Bio"
+    e = ET.SubElement(item, "link")
+    e.text = "https://wdetcms.wdet.org/?ppmacf_field=short_bio"
+    e = ET.SubElement(item, "pubDate")
+    e.text = format_datetime(created_date.astimezone(utc))
+    e = ET.SubElement(item, "dc:creator")
+    e.text = "admin"
+    e = ET.SubElement(item, "guid", attrib={"isPermaLink": "false"})
+    e.text = (
+        f"https://wdetcms.wdet.org/?post_type=ppmacf_field&#038;p={post_id}"
+    )
+    e = ET.SubElement(item, "description")
+    # empty
+    e = ET.SubElement(item, "content:encoded")
+    # empty
+    e = ET.SubElement(item, "excerpt:encoded")
+    # empty
+    e = ET.SubElement(item, "wp:post_id")
+    e.text = str(post_id)
+    e = ET.SubElement(item, "wp:post_date")
+    e.text = str(created_date)[:19]
+    e = ET.SubElement(item, "wp:post_date_gmt")
+    e.text = str(created_date.astimezone(utc))[:19]
+    e = ET.SubElement(item, "wp:post_modified")
+    e.text = str(created_date)[:19]
+    e = ET.SubElement(item, "wp:post_modified_gmt")
+    e.text = str(created_date.astimezone(utc))[:19]
+    e = ET.SubElement(item, "wp:comment_status")
+    e.text = "closed"
+    e = ET.SubElement(item, "wp:ping_status")
+    e.text = "closed"
+    e = ET.SubElement(item, "wp:post_name")
+    e.text = "short_bio"
+    e = ET.SubElement(item, "wp:status")
+    e.text = "publish"
+    e = ET.SubElement(item, "wp:post_parent")
+    e.text = "0"
+    e = ET.SubElement(item, "wp:menu_order")
+    e.text = "0"
+    e = ET.SubElement(item, "wp:post_type")
+    e.text = "ppmacf_field"
+    e = ET.SubElement(item, "wp:post_password")
+    # empty
+    e = ET.SubElement(item, "wp:is_sticky")
+    e.text = "0"
+    meta = ET.SubElement(item, "wp:postmeta")
+    e = ET.SubElement(meta, "wp:meta_key")
+    e.text = "ppmacf_type"
+    e = ET.SubElement(meta, "wp:meta_value")
+    e.text = "textarea"
+
+
 def generate(channel):
     audio_group_id = generate_audio_group(channel)
     generate_audio_field(channel, audio_group_id)
@@ -284,5 +342,7 @@ def generate(channel):
     credit_group_id = generate_credit_group(channel)
     generate_credit_field(channel, credit_group_id)
     generate_source_field(channel, credit_group_id)
+
+    generate_short_bio(channel)
 
     LOG.info("Added custom field configuration")
