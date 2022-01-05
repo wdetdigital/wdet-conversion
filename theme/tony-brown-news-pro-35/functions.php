@@ -42,3 +42,7 @@ EOT;
 	return $html;
 }
 add_filter( 'post_thumbnail_html', 'add_audio' );
+
+	
+add_post_type_support( 'page', 'excerpt' );
+
