@@ -13,7 +13,7 @@ add_action( 'wp_enqueue_scripts', 'news_box_pro_child_enqueue_scripts');
 
 function add_authors_excerpt($content) {
 	do_action('pp_multiple_authors_show_author_box', false, 'inline');
-	if (has_excerpt()) {
+	if (has_excerpt() && is_single()) {
 		$excerpt = get_the_excerpt();
 		$content = <<<EOT
 <div class="article-preview margin-leader margin-trailer clearfix text-center">
