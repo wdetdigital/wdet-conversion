@@ -108,7 +108,7 @@ href="https://player.streamguys.com/wdet/sgplayer3/player.php?l=layout-small+sin
     				</div>
     				<a href="/give/" class="header-donate">
     					<span class="fa fa-heart" aria-hidden></span>
-    					<strong>Donate</strong>
+    					<strong><p style="color:red;margin-bottom:1px;">Donate</p></strong>
     				</a>
     			
     				<div class="social">
