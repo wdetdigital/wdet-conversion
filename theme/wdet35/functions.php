@@ -1,24 +1,10 @@
 <?php
 
-
-// add excerpt filter
-
-function add_authors_excerpt($content) {
+function add_authors($content) {
 	do_action('pp_multiple_authors_show_author_box', false, 'inline');
-	if (has_excerpt() && is_single()) {
-		$excerpt = get_the_excerpt();
-		$content = <<<EOT
-<div class="article-preview margin-leader margin-trailer clearfix text-center">
-	<strong>
-		$excerpt
-	</strong>
-</div>
-$content
-EOT;
-	}
 	return $content;
 }
-add_filter('the_content', 'add_authors_excerpt');
+add_filter('the_content', 'add_authors');
 
 function add_audio($html) {
 	$audio = get_field('featured_audio');
