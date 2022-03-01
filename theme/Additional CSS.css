@@ -1,6 +1,24 @@
+
+
+
 @charset "UTF-8";
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+#mc_embed_signup {
+font:14px "Gotham SSm A", "Gotham SSm B";
+	font-family: "Gotham SSm A", "Gotham SSm B",
+	
+}
+#backer {
+	background: #FFFFFF
+	
+}
+#bluewrap {
+	
 
+	display: flex;
+  flex-wrap: wrap;
+align-content: center;
+}
 
 
 
@@ -7275,11 +7293,11 @@ a:hover .logo-hover-black path {
   height: 16px;
   width: 16px;
   border: 0;
-  background: transparent url(controls.svg) no-repeat;
+ 
 }
 
 .no-svg .mejs-controls .mejs-button button {
-  background-image: url(controls.png);
+
 }
 
 .mejs-controls .mejs-button button:focus {
@@ -8840,7 +8858,9 @@ div.mejs-speed-button {
   }
 }
 
-
+.header-layout-2 .main-navigation i.ham{
+	margin-left: unset;
+}
 
 .new-navbar-nav {
 
@@ -8869,5 +8889,12 @@ div.mejs-speed-button {
 @media (min-width: 890px) {
   .wdet-pull-left {
     margin-right: 30px;
+  }
+}
+
+
+@media screen and (max-width: 970px) {
+  div.example {
+    display: none;
   }
 }
