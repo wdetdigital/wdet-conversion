@@ -1,0 +1,22 @@
+/*
+Theme Name: WDET3.5
+Version: 1.0
+Description: A child theme of CoverNews Pro
+Author: Anthony Brown
+Template: covernews-pro
+*/
+
+@import url("../covernews-pro/style.css");
+
+
+body {
+font-family: "Gotham SSm A", "Gotham SSm B", "Gill Sans","Source Sans Pro", Helvetica, Arial, sans-serif;
+}
+
+.site-header2 {
+font-family: "Gotham SSm A", "Gotham SSm B", "Gill Sans","Source Sans Pro", Helvetica, Arial, sans-serif;
+}
+
+header audio {
+	width: 100%;
+}
