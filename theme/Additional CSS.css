@@ -8898,3 +8898,10 @@ div.mejs-speed-button {
     display: none;
   }
 }
+
+.fa-angle-left::before{
+content: "\e1019" !important;
+}
+.fa-angle-right::before{
+content: "\e1111" !important;
+}
