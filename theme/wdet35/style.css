@@ -20,3 +20,40 @@ font-family: "Gotham SSm A", "Gotham SSm B", "Gill Sans","Source Sans Pro", Helv
 header audio {
 	width: 100%;
 }
+
+/*temporary buttons*/
+
+.button2give {color: #7d214c; background-color: #d04e8b;}
+.button2give:hover {background-color: rgba(224, 138, 179, 0.5);}
+.button3listen {color: #0d5c78; background-color: #5da8ba;}
+.button3listen:hover {background-color: rgba(93, 168, 186, 0.5);}
+
+#webphone {
+  display: block; 
+  margin-left: auto;
+  margin-right: auto;
+  width: 66%;
+}
+#webphone button{
+  width:  100%;
+  height: 60px;	
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	#webphone{
+	  width: 100%;
+	}
+}
+@media (min-width: 970px) {
+  #webphone {
+    display: none;
+  }
+}
+/*end temp*/
