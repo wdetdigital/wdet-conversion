@@ -30,7 +30,7 @@
   gtag('config', 'UA-60587032-1');
 </script>
 
-	
+	<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6616132/631866/css/fonts.css" />
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
@@ -69,7 +69,15 @@
     googletag.pubads().enableSingleRequest();
     googletag.enableServices();
   });
-</script>	
+</script>
+	<script language="javascript" type="text/javascript">
+function windowClose() {
+window.open('','_parent','');
+window.close();
+}
+</script>
+	
+	
     <?php wp_head(); ?>
 </head>
 
@@ -140,11 +148,19 @@ href="https://player.streamguys.com/wdet/sgplayer3/player.php?l=layout-small+sin
         </div>
 			</div>
 	  </div>
-		
-		
 
 </header>
 	</div>
+	
+	<center>
+	<div id="webphone">
+	<a class="" target="_blank" data-popup="wdetplayer" data-popup-width="600" data-popup-height="650"
+href="/a/"><button class="button3listen"><span class="fa fa-volume-up" aria-hidden></span><br>Listen Live</button></a>
+	<a href="https://wdet.secureallegiance.com/wdet/WebModule/Donate.aspx?P=WEBGIFTS&PAGETYPE=PLG&CHECK=h8P6BDqH37CDky%2bMCTICJW3L5BYddGq6PVAl6UEf65g%3d"><button class="button2give"><span class="fa fa-heart" aria-hidden></span><br>Donate</button></a>
+</div>
+		</center>
+	
+	
 	<!-- /127394106/wdet_leaderboard_top -->
 <div class="example">
 <center>
@@ -156,14 +172,7 @@ href="https://player.streamguys.com/wdet/sgplayer3/player.php?l=layout-small+sin
 	</center>
 	<br/>
 </div>
-<center>
-	<div id="webphone">
-	<a class="" target="_blank" data-popup="wdetplayer" data-popup-width="600" data-popup-height="650"
-href="/a/"><button class="button3listen"><span class="fa fa-volume-up" aria-hidden></span><br>Listen Live</button></a>
-	<a href="https://wdet.secureallegiance.com/wdet/WebModule/Donate.aspx?P=WEBGIFTS&PAGETYPE=PLG&CHECK=h8P6BDqH37CDky%2bMCTICJW3L5BYddGq6PVAl6UEf65g%3d"><button class="button2give"><span class="fa fa-heart" aria-hidden></span><br>Donate</button></a>
-</div>
-</center>
-	
+
 <?php
 $enable_preloader = covernews_get_option('enable_site_preloader');
 if ( 1 == $enable_preloader ):
