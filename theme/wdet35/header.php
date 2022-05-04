@@ -16,11 +16,11 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11">
-	
+    
 <meta name="description" content="WDET is Detroit's Public Radio Station. For over 60 years, WDET has provided an independent voice for Detroit through a mix of news, music and cultural programming that's unique as the city and region we serve.">
   <meta name="keywords" content="NPR Detroit, public radio, radio news, detroit news, detroit music, detroit podcast, breaking news detriot, new in detroit, live news, 101.9fm, wdet,">
-	
-	<!-- Global site tag (gtag.js) - Google Analytics -->
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-60587032-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -30,10 +30,10 @@
   gtag('config', 'UA-60587032-1');
 </script>
 
-	<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6616132/631866/css/fonts.css" />
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="profile" href="https://gmpg.org/xfn/11">
+    <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6616132/631866/css/fonts.css" />
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>
   window.googletag = window.googletag || {cmd: []};
@@ -52,7 +52,7 @@
     googletag.enableServices();
   });
 </script>
-	<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>
   window.googletag = window.googletag || {cmd: []};
   googletag.cmd.push(function() {
@@ -70,14 +70,14 @@
     googletag.enableServices();
   });
 </script>
-	<script language="javascript" type="text/javascript">
+    <script language="javascript" type="text/javascript">
 function windowClose() {
 window.open('','_parent','');
 window.close();
 }
 </script>
-	
-	
+    
+    
     <?php wp_head(); ?>
 </head>
 
@@ -89,88 +89,85 @@ if ( function_exists( 'wp_body_open' ) ) {
     do_action( 'wp_body_open' );
 } ?>
 
-	<div class="example"> 
-	<header class="site-header2">
-		<div class="container site-header-container">
+    <div class="example"> 
+    <header class="site-header2">
+        <div class="container site-header-container">
 
-						<div class="top-header">
+                        <div class="top-header">
 
-        				<a href="/" class="logo">
-				            <div class="logo site-header2-logo">
-	<div class="png">
-		<img src="/wp-content/uploads/2022/01/22logo-shape-inverted.png" alt="wdet"/>
-	</div>
-	
-</div>					<span class="h1 sr-only">WDET</span>
+                        <a href="/" class="logo">
+                            <div class="logo site-header2-logo">
+    <div class="png">
+        <img src="/wp-content/uploads/2022/01/22logo-shape-inverted.png" alt="wdet"/>
+    </div>
+    
+</div>                  <span class="h1 sr-only">WDET</span>
         </a>
 
-			         
+                     
 
-			          <div class="hidden-xs">
+                      <div class="hidden-xs">
           <div class="top-header-desktop">
-    				<div class="now-playing-wrapper">
+                    <div class="now-playing-wrapper">
               <span class="now-playing"><iframe src="https://composer.nprstations.org/widgets/iframe/now.html?v=5.11.0&station=5182d007e1c809685c190ee6" seamless></iframe></span>
-             <a class="sgplayer-link" target="_blank" width="500" height="600"
-href="https://player.streamguys.com/wdet/sgplayer3/player.php?l=layout-small+single-stream-metadata">
-    					  <span class="fa fa-volume-up" aria-hidden></span>
-    					  <strong style="word-break: normal">Listen</strong>
+             <a href="#" onclick="window.open('https://player.streamguys.com/wdet/sgplayer3/player.php?l=layout-small+single-stream-metadata','WDET 101.9 FM Player','resizable,width=500,height=600'); return false">
+                          <span class="fa fa-volume-up" aria-hidden></span>
+                          <strong>Listen</strong>
               </a>
-    				</div>
-    			
-			  
-			  
-			  <a href="https://wdet.secureallegiance.com/wdet/WebModule/Donate.aspx?P=WEBGIFTS&PAGETYPE=PLG&CHECK=h8P6BDqH37CDky%2bMCTICJW3L5BYddGq6PVAl6UEf65g%3d" class="header-donate"> 
-    					<span class="fa fa-heart red-color" aria-hidden></span>
-    					<strong><p style="color:red;">Donate</p></strong>
-    				</a>
-    			
-			  
-	
-    			
-    				<div class="social">
-            	<a href="https://www.facebook.com/WDETFM" aria-label="Visit us on Facebook." class="a-no-decorate" target="_blank">
-            	  <span class="fa fa-fw fa-facebook" aria-hidden></span>
-            	</a>
-            	<a href="https://twitter.com/wdet" aria-label="Visit us on Twitter." class="a-no-decorate" target="_blank">
-          			<span class="fa fa-fw fa-twitter" aria-hidden></span>
-            	</a>
-            	<a href="http://instagram.com/wdetdetroit" aria-label="Visit us on Instagram." class="a-no-decorate" target="_blank">
-          			<span class="fa fa-fw fa-instagram" aria-hidden></span>
-            	</a>
-            	<a href="https://www.linkedin.com/company/wdet-101.9-fm-detroit-public-radio/" aria-label="Visit us on Linkedin." class="a-no-decorate" target="_blank">
-          			<span class="fa fa-fw fa-linkedin" aria-hidden></span>
-            	</a>
+                    </div>
+                
+              
+              
+               <a href="/give/" class="header-donate"> 
+                        <span class="fa fa-heart" aria-hidden></span>
+                        <strong>Donate</strong>
+              </a>
+                
+              
+    
+                
+                    <div class="social">
+                <a href="https://www.facebook.com/WDETFM" aria-label="Visit us on Facebook." class="a-no-decorate" target="_blank">
+                  <span class="fa fa-fw fa-facebook" aria-hidden></span>
+                </a>
+                <a href="https://twitter.com/wdet" aria-label="Visit us on Twitter." class="a-no-decorate" target="_blank">
+                    <span class="fa fa-fw fa-twitter" aria-hidden></span>
+                </a>
+                <a href="http://instagram.com/wdetdetroit" aria-label="Visit us on Instagram." class="a-no-decorate" target="_blank">
+                    <span class="fa fa-fw fa-instagram" aria-hidden></span>
+                </a>
+                <a href="https://www.linkedin.com/company/wdet-101.9-fm-detroit-public-radio/" aria-label="Visit us on Linkedin." class="a-no-decorate" target="_blank">
+                    <span class="fa fa-fw fa-linkedin" aria-hidden></span>
+                </a>
             </div>
-    				<div class="tagline">
+                    <div class="tagline">
               Detroit's NPR Station
             </div>
           </div>
         </div>
-			</div>
-	  </div>
+            </div>
+      </div>
 
 </header>
-	</div>
-	
-	<center>
-	<div id="webphone">
-	<a class="" target="_blank" data-popup="wdetplayer" data-popup-width="600" data-popup-height="650"
+    </div>
+    
+    <div id="webphone">
+    <a target="_blank" data-popup="wdetplayer" data-popup-width="600" data-popup-height="650"
 href="/a/"><button class="button3listen"><span class="fa fa-volume-up" aria-hidden></span><br>Listen Live</button></a>
-	<a href="https://wdet.secureallegiance.com/wdet/WebModule/Donate.aspx?P=WEBGIFTS&PAGETYPE=PLG&CHECK=h8P6BDqH37CDky%2bMCTICJW3L5BYddGq6PVAl6UEf65g%3d"><button class="button2give"><span class="fa fa-heart" aria-hidden></span><br>Donate</button></a>
+    <a href="/give/"><button class="button2give"><span class="fa fa-heart" aria-hidden></span><br>Donate</button></a>
 </div>
-		</center>
-	
-	
-	<!-- /127394106/wdet_leaderboard_top -->
+    
+    
+    <!-- /127394106/wdet_leaderboard_top -->
 <div class="example">
 <center>
 
 <div id="div-gpt-ad-1641667171256-0" style="min-width: 728px; min-height: 90px;"><script>
     googletag.cmd.push(function() { googletag.display('div-gpt-ad-1641667171256-0'); });
   </script></div>
-	
-	</center>
-	<br/>
+    
+    </center>
+    <br/>
 </div>
 
 <?php
