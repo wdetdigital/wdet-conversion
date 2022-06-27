@@ -18,10 +18,9 @@ font-family: "Gotham SSm A", "Gotham SSm B", "Gill Sans","Source Sans Pro", Helv
 }
 
 header audio {
-	width: 100%;
+  width: 100%;
 }
 
-/*temporary buttons*/
 
 .button2give {color: #7d214c; background-color: #d04e8b;}
 .button2give:hover {background-color: rgba(224, 138, 179, 0.5);}
@@ -36,7 +35,7 @@ header audio {
 }
 #webphone button{
   width:  100%;
-  height: 60px;	
+  height: 60px; 
   border: none;
   text-align: center;
   text-decoration: none;
@@ -47,13 +46,48 @@ header audio {
 }
 
 @media (max-width: 768px) {
-	#webphone{
-	  width: 100%;
-	}
+  #webphone{
+    width: 100%;
+  }
 }
 @media (min-width: 970px) {
   #webphone {
     display: none;
   }
 }
-/*end temp*/
+
+div.now-playing-wrapper a:visited,
+div.social a:visited {
+  color: #5da8ba;
+}
+
+div.now-playing-wrapper a:visited,
+div.social a:visited {
+  color: #5da8ba;
+}
+
+.main-navigation ul>li>a:hover,
+.main-navigation ul>li>a:active{
+  background-color: #80C5D6;
+    text-decoration: none;
+}
+.main-navigation ul>li.current-menu-item>a:after,
+.main-navigation ul>li>a:hover:after {
+    display: none;
+    width: 0%;
+}
+
+@media (min-width: 768px) {
+
+  .header-layout-2 .site-branding { 
+    display:none; }
+
+  .main-navigation .menu ul > li > a, 
+  .main-navigation .menu ul.menu-desktop > li > a {
+    padding: 20px 20px; }
+
+  .menu.main-menu {
+    display: flex;
+    justify-content: center;
+  }
+}
